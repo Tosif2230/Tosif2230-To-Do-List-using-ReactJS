@@ -45,4 +45,4 @@ Open this link in your browser to view the application.
 
 # Live Preview
 
-<a href="https://tosif2230.github.io/Tosif2230-To-Do-List-using-ReactJS/">To-Do App</a>
+<a href="https://tosif2230-to-do-list-using-react-js.vercel.app/">To-Do App</a>
