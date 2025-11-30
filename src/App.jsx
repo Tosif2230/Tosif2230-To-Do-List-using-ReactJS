@@ -1,47 +1,58 @@
 import "./App.css";
 import Header from "./components/Header";
-import { MdFormatListBulletedAdd } from "react-icons/md";
 import ToDoList from "./components/ToDoList";
+import { MdFormatListBulletedAdd } from "react-icons/md";
 import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 function App() {
   const [todos, setTodos] = useState([]);
   const [inputValue, setInputValue] = useState("");
 
   const addTodo = () => {
-
     if (inputValue.trim() !== "") {
-      setTodos([...todos, inputValue]);
+      const newTodo = {
+        id: uuidv4(),
+        text: inputValue,
+        completed: false,
+      };
+      setTodos([...todos, newTodo]);
       setInputValue("");
     }
   };
+
+  const toggleComplete = (id) => {
+    setTodos(
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo
+      )
+    );
+  };
+
   return (
     <main>
-      <section className="flex flex-col justify-center items-center bg-gray-200 rounded-3xl  ">
+      <section className="flex flex-col items-center m-5 p-5 bg-gray-200 rounded-3xl ">
         <Header />
-        <div>
+        <div className="flex">
           <input
+            className="flex items-center bg-white rounded-md m-1 p-1 w-80"
             type="text"
-            placeholder="Enter a Task"
+            placeholder="Enter a task..."
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") addTodo();
-            }}
-            className="bg-stone-300 rounded-md text-center mt-1 p-0.5 w-80 hover:bg-white focus:bg-white"
+            onKeyDown={(e) => e.key === "Enter" && addTodo()}
           />
-
-          <button
-            onClick={addTodo}
-            className="bg-blue-900 text-white rounded-md p-2 m-2 cursor-pointer"
-          >
-            <MdFormatListBulletedAdd />
-          </button>
-        </div>
-        <div>
-          <ToDoList todos={todos} />
+     
+          <div>
+          <button className="bg-blue-900 text-white rounded-md m-1 p-2 cursor-pointer" 
+            onClick={addTodo}><MdFormatListBulletedAdd /></button>
+            </div>
         </div>
       </section>
+      <aside className="flex justify-center m-5 p-5 h-full bg-gray-200 rounded-3xl ">
+        <ToDoList todos={todos} toggleComplete={toggleComplete} />
+      </aside>
+        
     </main>
   );
 }
