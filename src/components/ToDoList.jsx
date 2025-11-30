@@ -1,6 +1,6 @@
 import ToDoItem from "./ToDoItem";
 
-function ToDoList({ todos , toggleComplete }) {
+function ToDoList({ todos , toggleComplete ,editTodo , deleteTodo }) {
       if (todos.length === 0){
         return <p>No todos added....</p>
       }
@@ -12,7 +12,9 @@ function ToDoList({ todos , toggleComplete }) {
             <ToDoItem 
             key={todo.id}
             todo = {todo}     
-            toggleComplete = {toggleComplete}   
+            toggleComplete = {toggleComplete}  
+            editTodo = {editTodo}
+            deleteTodo = {deleteTodo} 
             />
           ))
           }

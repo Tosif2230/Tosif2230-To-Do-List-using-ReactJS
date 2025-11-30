@@ -28,6 +28,14 @@ function App() {
       )
     );
   };
+  const editTodo = (id, newText) => {
+    setTodos(
+      todos.map((todo) => (todo.id === id ? { ...todo, text: newText } : todo))
+    );
+  };
+  const deleteTodo = (id) => {
+    setTodos(todos.filter((todo) => todo.id !== id));
+  };
 
   return (
     <main>
@@ -42,17 +50,25 @@ function App() {
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && addTodo()}
           />
-     
+
           <div>
-          <button className="bg-blue-900 text-white rounded-md m-1 p-2 cursor-pointer" 
-            onClick={addTodo}><MdFormatListBulletedAdd /></button>
-            </div>
+            <button
+              className="bg-blue-900 text-white rounded-md m-1 p-2 cursor-pointer"
+              onClick={addTodo}
+            >
+              <MdFormatListBulletedAdd />
+            </button>
+          </div>
         </div>
       </section>
-      <aside className="flex justify-center m-5 p-5 h-full bg-gray-200 rounded-3xl ">
-        <ToDoList todos={todos} toggleComplete={toggleComplete} />
-      </aside>
-        
+      <section className="flex justify-center m-5 p-5 h-full bg-gray-200 rounded-3xl ">
+        <ToDoList
+          todos={todos}
+          toggleComplete={toggleComplete}
+          editTodo={editTodo}
+          deleteTodo={deleteTodo}
+        />
+      </section>
     </main>
   );
 }
